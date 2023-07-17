@@ -1,0 +1,52 @@
+<!-- xml version="1.0"? -->
+<launch>
+
+<arg name="min_disparity" default="0"/>
+<arg name="num_disparities" default="320"/>
+<arg name="block_size" default="3"/>
+<arg name="P1" default="216"/>
+<arg name="P2" default="864"/>
+<arg name="disp12_max_diff" default="1"/>
+<arg name="pre_filter_cap" default="63"/>
+<arg name="uniqueness_ratio" default="10"/>
+<arg name="speckle_window_size" default="100"/>
+<arg name="speckle_range" default="2"/>
+<arg name="sgbm_mode" default="0"/>
+<arg name="inpaint" default="false"/>
+<arg name="wls_filter" default="false"/>
+<arg name="wls_lambda" default="8000"/>
+<arg name="wls_sigma" default="1.5"/>
+<arg name="fbs" default="false"/>
+
+<arg name="rectify" default="false"/>
+
+<!-- Image proc for rectification -->
+<group if="$(eval rectify)">
+    <node name="image_proc" pkg="image_proc" type="image_proc" ns="theia/left">
+    </node>
+
+    <node name="image_proc" pkg="image_proc" type="image_proc" ns="theia/right">
+    </node>
+</group>
+
+<!-- Currently setup for gazebo calibration -->
+<node pkg="disparity_camera" type="disparity_camera_sgbm" name="disparity_camera_sgbm" output="screen">
+    <param name="min_disparity" type="int" value="$(arg min_disparity)" />
+    <param name="num_disparities" type="int" value="$(arg num_disparities)" />
+    <param name="block_size" type="int" value="$(arg block_size)" />
+    <param name="P1" type="int" value="$(arg P1)" />
+    <param name="P2" type="int" value="$(arg P2)" />
+    <param name="disp12_max_diff" type="int" value="$(arg disp12_max_diff)" />
+    <param name="pre_filter_cap" type="int" value="$(arg pre_filter_cap)" />
+    <param name="uniqueness_ratio" type="int" value="$(arg uniqueness_ratio)" />
+    <param name="speckle_window_size" type="int" value="$(arg speckle_window_size)" />
+    <param name="speckle_range" type="int" value="$(arg speckle_range)" />
+    <param name="sgbm_mode" type="int" value="$(arg sgbm_mode)" />
+    <param name="inpaint" type="bool" value="$(arg inpaint)" />
+    <param name="wls_filter" type="bool" value="$(arg wls_filter)" />
+    <param name="wls_lambda" type="double" value="$(arg wls_lambda)" />
+    <param name="wls_sigma" type="double" value="$(arg wls_sigma)" />
+    <param name="fbs" type="bool" value="$(arg fbs)" />
+</node>
+
+</launch>
