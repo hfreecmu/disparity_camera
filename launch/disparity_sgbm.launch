@@ -18,17 +18,6 @@
 <arg name="wls_sigma" default="1.5"/>
 <arg name="fbs" default="false"/>
 
-<arg name="rectify" default="false"/>
-
-<!-- Image proc for rectification -->
-<group if="$(eval rectify)">
-    <node name="image_proc" pkg="image_proc" type="image_proc" ns="theia/left">
-    </node>
-
-    <node name="image_proc" pkg="image_proc" type="image_proc" ns="theia/right">
-    </node>
-</group>
-
 <!-- Currently setup for gazebo calibration -->
 <node pkg="disparity_camera" type="disparity_camera_sgbm" name="disparity_camera_sgbm" output="screen">
     <param name="min_disparity" type="int" value="$(arg min_disparity)" />
